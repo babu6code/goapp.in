@@ -1,43 +1,105 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>GoApp Game Hub</title>
+  <title>goapp.in</title>
   <style>
     body {
-      font-family: Arial;
-      text-align: center;
-      background: linear-gradient(135deg,#141e30,#243b55);
-      color: white;
+      background: black;
+      color: #00ff00;
+      font-family: "Courier New", monospace;
+      margin: 0;
+      padding: 20px;
+      overflow: hidden;
     }
-    .container {
-      margin-top: 80px;
+
+    #terminal {
+      white-space: pre-line;
+      font-size: 16px;
     }
-    a {
-      display: block;
-      width: 250px;
-      margin: 15px auto;
-      padding: 15px;
-      background: #00c6ff;
-      color: white;
-      text-decoration: none;
-      border-radius: 8px;
+
+    .cursor {
+      display: inline-block;
+      width: 10px;
+      background: #00ff00;
+      animation: blink 1s infinite;
+    }
+
+    @keyframes blink {
+      0% { opacity: 0 }
+      50% { opacity: 1 }
+      100% { opacity: 0 }
+    }
+
+    #hidden {
+      display: none;
+      margin-top: 20px;
+      color: red;
       font-size: 18px;
     }
-    a:hover {
-      background: #0072ff;
+
+    button {
+      background: transparent;
+      border: 1px solid #00ff00;
+      color: #00ff00;
+      padding: 10px;
+      margin-top: 20px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #00ff00;
+      color: black;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>🎮 GoApp Game Hub</h1>
 
-    <a href="games/click.html">🎯 Click The Box</a>
-    <a href="games/snake.html">🐍 Snake Game</a>
-    <a href="games/memory.html">🧠 Memory Game</a>
-    <a href="games/brick.html">🧱 Brick Breaker</a>
-    <a href="games/catch.html">💰 Catch The Coin</a>
-    <a href="games/hack.html">🔐 Hacker Simulator</a>
-  </div>
+<div id="terminal"></div>
+<span class="cursor"></span>
+
+<div id="hidden">
+  🔓 ACCESS GRANTED  
+  <br><br>
+  Welcome to GoBank Core System  
+  <br><br>
+  <button onclick="location.href='https://goapp.in'">
+    Enter Secure System
+  </button>
+</div>
+
+<script>
+  const terminal = document.getElementById("terminal");
+
+  const lines = [
+    "Initializing secure protocol...",
+    "Connecting to encrypted banking server...",
+    "IP detected: 192.168.0.7",
+    "Bypassing firewall...",
+    "Decrypting credentials...",
+    "Scanning system vulnerabilities...",
+    "Access level: RESTRICTED",
+    "Authentication required...",
+    "Type 'root' to continue..."
+  ];
+
+  let i = 0;
+
+  function typeLine() {
+    if (i < lines.length) {
+      terminal.innerHTML += lines[i] + "\n";
+      i++;
+      setTimeout(typeLine, 800);
+    }
+  }
+
+  typeLine();
+
+  document.addEventListener("keydown", function(e) {
+    if (e.key.toLowerCase() === "r") {
+      document.getElementById("hidden").style.display = "block";
+    }
+  });
+</script>
+
 </body>
 </html>
