@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>GoApp Mini Game</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background: linear-gradient(135deg, #1e3c72, #2a5298);
+      color: white;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1 {
+      margin-top: 20px;
+    }
+
+    #gameArea {
+      width: 90%;
+      max-width: 600px;
+      height: 400px;
+      margin: 20px auto;
+      background: white;
+      position: relative;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    #box {
+      width: 50px;
+      height: 50px;
+      background: red;
+      position: absolute;
+      cursor: pointer;
+      border-radius: 8px;
+    }
+
+    #info {
+      margin-top: 10px;
+      font-size: 18px;
+    }
+
+    button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      background: #ffcc00;
+    }
+
+    button:hover {
+      background: #ffaa00;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🎯 Click the Moving Box</h1>
+
+  <div id="gameArea">
+    <div id="box"></div>
+  </div>
+
+  <div id="info">
+    Score: <span id="score">0</span> |
+    Time Left: <span id="time">30</span>s
+  </div>
+
+  <br>
+  <button onclick="startGame()">Start / Restart</button>
+
+  <script>
+    const box = document.getElementById("box");
+    const gameArea = document.getElementById("gameArea");
+    const scoreDisplay = document.getElementById("score");
+    const timeDisplay = document.getElementById("time");
+
+    let score = 0;
+    let timeLeft = 30;
+    let gameInterval;
+    let timerInterval;
+
+    function randomPosition() {
+      const maxX = gameArea.clientWidth - 50;
+      const maxY = gameArea.clientHeight - 50;
+
+      const x = Math.random() * maxX;
+      const y = Math.random() * maxY;
+
+      box.style.left = x + "px";
+      box.style.top = y + "px";
+    }
+
+    box.addEventListener("click", () => {
+      score++;
+      scoreDisplay.textContent = score;
+      randomPosition();
+    });
+
+    function startGame() {
+      score = 0;
+      timeLeft = 30;
+      scoreDisplay.textContent = score;
+      timeDisplay.textContent = timeLeft;
+
+      randomPosition();
+
+      clearInterval(gameInterval);
+      clearInterval(timerInterval);
+
+      gameInterval = setInterval(randomPosition, 800);
+
+      timerInterval = setInterval(() => {
+        timeLeft--;
+        timeDisplay.textContent = timeLeft;
+
+        if (timeLeft <= 0) {
+          clearInterval(gameInterval);
+          clearInterval(timerInterval);
+          alert("Game Over! Your score: " + score);
+        }
+      }, 1000);
+    }
+  </script>
+
+</body>
+</html>
