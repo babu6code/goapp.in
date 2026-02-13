@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Memory</title>
+<style>
+body{text-align:center;font-family:Arial;}
+.card{
+ display:inline-block;
+ width:80px;height:80px;
+ margin:10px;
+ background:#3498db;
+ font-size:40px;
+ color:white;
+ line-height:80px;
+ cursor:pointer;
+}
+</style>
+</head>
+<body>
+<h1>Memory Game</h1>
+<div id="board"></div>
+
+<script>
+let symbols=["🍎","🍎","🍌","🍌","🍇","🍇"];
+symbols.sort(()=>0.5-Math.random());
+let first=null;
+
+symbols.forEach(sym=>{
+ let div=document.createElement("div");
+ div.className="card";
+ div.onclick=function(){
+  div.textContent=sym;
+  if(!first) first=div;
+  else{
+    if(first.textContent!==div.textContent){
+      setTimeout(()=>{
+        first.textContent="";
+        div.textContent="";
+      },500);
+    }
+    first=null;
+  }
+ };
+ document.getElementById("board").appendChild(div);
+});
+</script>
+</body>
+</html>
