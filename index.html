@@ -3,102 +3,120 @@
 <head>
   <title>goapp.in</title>
   <style>
-    body {
-      background: black;
-      color: #00ff00;
-      font-family: "Courier New", monospace;
+    html, body {
       margin: 0;
-      padding: 20px;
+      padding: 0;
+      background: black;
       overflow: hidden;
-    }
-
-    #terminal {
-      white-space: pre-line;
-      font-size: 16px;
-    }
-
-    .cursor {
-      display: inline-block;
-      width: 10px;
-      background: #00ff00;
-      animation: blink 1s infinite;
-    }
-
-    @keyframes blink {
-      0% { opacity: 0 }
-      50% { opacity: 1 }
-      100% { opacity: 0 }
-    }
-
-    #hidden {
-      display: none;
-      margin-top: 20px;
-      color: red;
-      font-size: 18px;
-    }
-
-    button {
-      background: transparent;
-      border: 1px solid #00ff00;
+      font-family: monospace;
       color: #00ff00;
-      padding: 10px;
-      margin-top: 20px;
-      cursor: pointer;
     }
 
-    button:hover {
-      background: #00ff00;
-      color: black;
+    canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    #warning {
+      position: absolute;
+      width: 100%;
+      text-align: center;
+      top: 40%;
+      font-size: 40px;
+      letter-spacing: 5px;
+      animation: flicker 2s infinite;
+    }
+
+    @keyframes flicker {
+      0% {opacity:1;}
+      5% {opacity:0.1;}
+      10% {opacity:1;}
+      15% {opacity:0.3;}
+      20% {opacity:1;}
+      100% {opacity:1;}
+    }
+
+    #glitch {
+      position: absolute;
+      top: 55%;
+      width: 100%;
+      text-align: center;
+      font-size: 20px;
+      color: red;
     }
   </style>
 </head>
 <body>
 
-<div id="terminal"></div>
-<span class="cursor"></span>
+<canvas id="matrix"></canvas>
 
-<div id="hidden">
-  🔓 ACCESS GRANTED  
-  <br><br>
-  Welcome to GoBank Core System  
-  <br><br>
-  <button onclick="location.href='https://goapp.in'">
-    Enter Secure System
-  </button>
-</div>
+<div id="warning">⚠ SYSTEM BREACH DETECTED ⚠</div>
+<div id="glitch">Tracking IP...</div>
 
 <script>
-  const terminal = document.getElementById("terminal");
+  // MATRIX RAIN EFFECT
+  const canvas = document.getElementById("matrix");
+  const ctx = canvas.getContext("2d");
 
-  const lines = [
-    "Initializing secure protocol...",
-    "Connecting to encrypted banking server...",
-    "IP detected: 192.168.0.7",
-    "Bypassing firewall...",
-    "Decrypting credentials...",
-    "Scanning system vulnerabilities...",
-    "Access level: RESTRICTED",
-    "Authentication required...",
-    "Type 'root' to continue..."
-  ];
+  canvas.height = window.innerHeight;
+  canvas.width = window.innerWidth;
 
-  let i = 0;
+  const letters = "01";
+  const fontSize = 16;
+  const columns = canvas.width / fontSize;
 
-  function typeLine() {
-    if (i < lines.length) {
-      terminal.innerHTML += lines[i] + "\n";
-      i++;
-      setTimeout(typeLine, 800);
+  const drops = [];
+  for (let x = 0; x < columns; x++) {
+    drops[x] = 1;
+  }
+
+  function draw() {
+    ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    ctx.fillStyle = "#0F0";
+    ctx.font = fontSize + "px monospace";
+
+    for (let i = 0; i < drops.length; i++) {
+      const text = letters.charAt(Math.floor(Math.random() * letters.length));
+      ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+      if (drops[i] * fontSize > canvas.height && Math.random() > 0.975)
+        drops[i] = 0;
+
+      drops[i]++;
     }
   }
 
-  typeLine();
+  setInterval(draw, 33);
 
-  document.addEventListener("keydown", function(e) {
-    if (e.key.toLowerCase() === "r") {
-      document.getElementById("hidden").style.display = "block";
+  // RANDOM GLITCH TEXT
+  const glitchText = document.getElementById("glitch");
+  const messages = [
+    "Accessing camera...",
+    "Decrypting device...",
+    "Firewall compromised...",
+    "Location traced...",
+    "Unauthorized activity detected...",
+    "Connecting to mainframe..."
+  ];
+
+  setInterval(() => {
+    glitchText.textContent =
+      messages[Math.floor(Math.random() * messages.length)];
+  }, 2000);
+
+  // RANDOM SCREEN FLASH
+  setInterval(() => {
+    if (Math.random() > 0.85) {
+      document.body.style.background = "darkred";
+      setTimeout(() => {
+        document.body.style.background = "black";
+      }, 100);
     }
-  });
+  }, 1000);
+
 </script>
 
 </body>
