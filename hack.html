@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Hacker Simulator</title>
+<style>
+body{background:black;color:lime;font-family:monospace;}
+</style>
+</head>
+<body>
+<h2>🔐 Accessing Secure Server...</h2>
+<pre id="log"></pre>
+
+<script>
+let log=document.getElementById("log");
+let lines=[
+"Connecting to bank database...",
+"Bypassing firewall...",
+"Decrypting credentials...",
+"Access Granted!",
+"💰 Account Balance: ₹ 9,99,99,999"
+];
+let i=0;
+
+let interval=setInterval(()=>{
+ if(i<lines.length){
+   log.textContent+=lines[i]+"\n";
+   i++;
+ }else clearInterval(interval);
+},1000);
+</script>
+</body>
+</html>
