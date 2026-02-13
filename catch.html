@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Catch The Coin</title>
+<style>
+body{text-align:center;background:#222;color:white;}
+.coin{
+ position:absolute;
+ font-size:40px;
+ cursor:pointer;
+}
+</style>
+</head>
+<body>
+<h1>💰 Catch The Coin</h1>
+<h2>Score: <span id="score">0</span></h2>
+
+<script>
+let score=0;
+
+function spawn(){
+ let coin=document.createElement("div");
+ coin.className="coin";
+ coin.textContent="💰";
+ coin.style.left=Math.random()*90+"vw";
+ coin.style.top="0px";
+ document.body.appendChild(coin);
+
+ let fall=setInterval(()=>{
+   coin.style.top=(coin.offsetTop+5)+"px";
+   if(coin.offsetTop>500){
+     clearInterval(fall);
+     coin.remove();
+   }
+ },50);
+
+ coin.onclick=function(){
+   score++;
+   document.getElementById("score").textContent=score;
+   coin.remove();
+   clearInterval(fall);
+ };
+}
+
+setInterval(spawn,1000);
+</script>
+</body>
+</html>
