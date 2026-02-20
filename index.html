@@ -1,123 +1,158 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>goapp.in</title>
-  <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      background: black;
-      overflow: hidden;
-      font-family: monospace;
-      color: #00ff00;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GoApp.in | The Future is Here</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Space Grotesk', sans-serif;
+        }
 
-    canvas {
-      position: absolute;
-      top: 0;
-      left: 0;
-    }
+        body {
+            background-color: #050505;
+            color: #ffffff;
+            overflow: hidden; /* Keeps the vibe tight */
+        }
 
-    #warning {
-      position: absolute;
-      width: 100%;
-      text-align: center;
-      top: 40%;
-      font-size: 40px;
-      letter-spacing: 5px;
-      animation: flicker 2s infinite;
-    }
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
 
-    @keyframes flicker {
-      0% {opacity:1;}
-      5% {opacity:0.1;}
-      10% {opacity:1;}
-      15% {opacity:0.3;}
-      20% {opacity:1;}
-      100% {opacity:1;}
-    }
+        .main-container {
+            position: relative;
+            z-index: 2;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: radial-gradient(circle at center, rgba(0, 150, 255, 0.05) 0%, transparent 70%);
+        }
 
-    #glitch {
-      position: absolute;
-      top: 55%;
-      width: 100%;
-      text-align: center;
-      font-size: 20px;
-      color: red;
-    }
-  </style>
+        /* Glassmorphism Card */
+        .hero-card {
+            padding: 3rem;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        h1 {
+            font-size: 4rem;
+            letter-spacing: -2px;
+            background: linear-gradient(90deg, #fff, #4deeea, #fff);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shine 3s linear infinite;
+        }
+
+        p {
+            font-size: 1.2rem;
+            color: #888;
+            margin: 20px 0;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+        }
+
+        .btn {
+            margin-top: 30px;
+            padding: 12px 40px;
+            background: transparent;
+            color: #4deeea;
+            border: 1px solid #4deeea;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn:hover {
+            background: #4deeea;
+            color: #000;
+            box-shadow: 0 0 20px #4deeea;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes shine {
+            to { background-position: 200% center; }
+        }
+
+        /* Simple glitch effect for tech feel */
+        .glitch {
+            position: relative;
+        }
+
+        .glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            left: 2px;
+            text-shadow: -1px 0 red;
+            top: 0;
+            color: white;
+            background: black;
+            overflow: hidden;
+            clip: rect(0, 900px, 0, 0);
+            animation: noise-anim 2s infinite linear alternate-reverse;
+        }
+
+        @keyframes noise-anim {
+            0% { clip: rect(10px, 9999px, 50px, 0); }
+            100% { clip: rect(80px, 9999px, 100px, 0); }
+        }
+    </style>
 </head>
 <body>
 
-<canvas id="matrix"></canvas>
+    <div id="particles-js"></div>
 
-<div id="warning">⚠ SYSTEM BREACH DETECTED ⚠</div>
-<div id="glitch">Tracking IP...</div>
+    <div class="main-container">
+        <div class="hero-card">
+            <p>System Initialized</p>
+            <h1 class="glitch" data-text="GOAPP.IN">GOAPP.IN</h1>
+            <p style="letter-spacing: 2px; font-size: 0.9rem; color: #4deeea;">Architecting the Digital Tomorrow</p>
+            <button class="btn">Enter Interface</button>
+        </div>
+    </div>
 
-<script>
-  // MATRIX RAIN EFFECT
-  const canvas = document.getElementById("matrix");
-  const ctx = canvas.getContext("2d");
-
-  canvas.height = window.innerHeight;
-  canvas.width = window.innerWidth;
-
-  const letters = "01";
-  const fontSize = 16;
-  const columns = canvas.width / fontSize;
-
-  const drops = [];
-  for (let x = 0; x < columns; x++) {
-    drops[x] = 1;
-  }
-
-  function draw() {
-    ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    ctx.fillStyle = "#0F0";
-    ctx.font = fontSize + "px monospace";
-
-    for (let i = 0; i < drops.length; i++) {
-      const text = letters.charAt(Math.floor(Math.random() * letters.length));
-      ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-
-      if (drops[i] * fontSize > canvas.height && Math.random() > 0.975)
-        drops[i] = 0;
-
-      drops[i]++;
-    }
-  }
-
-  setInterval(draw, 33);
-
-  // RANDOM GLITCH TEXT
-  const glitchText = document.getElementById("glitch");
-  const messages = [
-    "Accessing camera...",
-    "Decrypting device...",
-    "Firewall compromised...",
-    "Location traced...",
-    "Unauthorized activity detected...",
-    "Connecting to mainframe..."
-  ];
-
-  setInterval(() => {
-    glitchText.textContent =
-      messages[Math.floor(Math.random() * messages.length)];
-  }, 2000);
-
-  // RANDOM SCREEN FLASH
-  setInterval(() => {
-    if (Math.random() > 0.85) {
-      document.body.style.background = "darkred";
-      setTimeout(() => {
-        document.body.style.background = "black";
-      }, 100);
-    }
-  }, 1000);
-
-</script>
-
+    <script>
+        /* Initialize Particles */
+        particlesJS("particles-js", {
+            "particles": {
+                "number": { "value": 80, "density": { "enable": true, "value_area": 800 } },
+                "color": { "value": "#4deeea" },
+                "shape": { "type": "circle" },
+                "opacity": { "value": 0.5, "random": false },
+                "size": { "value": 3, "random": true },
+                "line_linked": { "enable": true, "distance": 150, "color": "#4deeea", "opacity": 0.4, "width": 1 },
+                "move": { "enable": true, "speed": 2, "direction": "none", "random": false, "straight": false, "out_mode": "out", "bounce": false }
+            },
+            "interactivity": {
+                "events": { "onhover": { "enable": true, "mode": "repulse" }, "onclick": { "enable": true, "mode": "push" } }
+            },
+            "retina_detect": true
+        });
+    </script>
 </body>
 </html>
